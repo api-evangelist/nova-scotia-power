@@ -1,0 +1,391 @@
+aid: nova-scotia-power
+name: Nova Scotia Power
+review:
+  question: Does Nova Scotia Power expose a documented public API, and has it implemented
+    the Green Button mandate that Nova Scotia law imposes on it?
+  answer: false
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  summary: |
+    No. Nova Scotia Power publishes no developer portal, no OpenAPI or any other
+    machine-readable contract, and no documented consumer data API. Nova Scotia is
+    the only Canadian province other than Ontario to legislate Green Button, and the
+    statute is stricter than Ontario's on paper — it named a date and required BOTH
+    halves of the standard. Three years past that date the API half is still not
+    certified and the third-party marketplace is closed. Meanwhile the utility
+    publishes real, anonymously downloadable system data through its OASIS site.
+    That is the finding: open market data, closed consumer data, mandate unfulfilled.
+
+mandate:
+  regime: other
+  regimeNote: |
+    NOT Ontario's Green Button regulation and NOT voluntary adoption. Nova Scotia has
+    its own province-level, standard-specific statutory mandate: Section 4F of the
+    Electricity Act, added by Bill 145, "An Act to Amend Chapter 25 of the Acts of
+    2004, the Electricity Act" (SNS 2022, c. 12), given Royal Assent in 2022. This is
+    a second, independent Canadian Green Button mandate that sits outside the Ontario
+    regime, which is why it is recorded as `other` rather than `green-button-ontario`.
+    Canada has no national consumer data right for energy; electricity is provincial.
+  statutoryText:
+    - section: 4F(1)(c)
+      quote: >-
+        "energy data" means any energy usage and account holder information identified
+        in REQ.21.1.5t or REQ.21.2.6t in the NAESB ESPI standard, certified by the
+        Green Button Alliance
+    - section: 4F(2)
+      quote: >-
+        On or before September 1, 2022, Nova Scotia Power Incorporated must present to
+        the Board for review and approval a plan that would bring Nova Scotia Power
+        Incorporated into compliance with the Green Button Alliance's testing and
+        standards
+    - section: 4F(2)
+      quote: >-
+        an implementation date that occurs no later than April 1, 2023
+    - section: 4F(5)
+      quote: >-
+        Nova Scotia Power Incorporated shall implement the NAESB ESPI standard and
+        ensure that its implementation of the requirements set out in this Section is
+        certified by the Green Button Alliance to its "Connect My Data" and "Download
+        My Data" standards on or before April 1, 2023, unless granted an extension by
+        the Board
+  statutorySource: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+  status: designated-not-live
+  statusRationale: |
+    Ruthless reading. The obligation is in force, its deadline (2023-04-01) passed more
+    than three years ago, and the half of the standard that constitutes an actual API —
+    Connect My Data, the OAuth-authorized third-party sharing profile — is NOT certified
+    and NOT available. What I could verify:
+
+      VERIFIED IMPLEMENTED (partial): The Green Button Alliance's Canadian Initiatives
+      page states verbatim, "Nova Scotia Power is Certified to ESPI v.3.3 for Download
+      My Data (DMD) with CMD Certification planned." That is third-party certification
+      by the body the statute names, so the DMD leg is more than a self-claim. But DMD
+      is a file download for a logged-in account holder, not an API, and I could not
+      independently exercise it: greenbutton.nspower.ca returns HTTP 200 and then 302s
+      every path to a SAML login.
+
+      NOT IMPLEMENTED: Connect My Data. No CMD certification, no OAuth2 client
+      registration, no ESPI resource base URI, no third-party onboarding. Nova Scotia
+      Power's own site says the marketplace is shut.
+
+    A certification for one leg does not make a two-leg statutory mandate implemented.
+    Recorded as designated-not-live, with the DMD certification disclosed above so the
+    partial credit is not lost.
+  firstPartyEvidence:
+    - url: https://www.nspower.ca/cleanandgreen/innovation
+      httpStatus: 200
+      quote: >-
+        Green Button™ is the industry-standard tool that allows you to download and
+        securely share your Nova Scotia Power energy usage data with Third-Party
+        Applications, providing you with more choice in how you can access your
+        electricity data.
+    - url: https://www.nspower.ca/cleanandgreen/innovation
+      httpStatus: 200
+      quote: >-
+        Green Button Marketplace is currently closed. If you are a Third-Party
+        application provider and wish to have your application registered and approved
+        to be offered, please continue to check here for updates.
+    - url: https://www.nspower.ca/cleanandgreen/innovation/green-button-registration-form
+      httpStatus: 404
+      note: >-
+        The third-party registration form is linked from the Innovation page but the
+        page itself 404s. The only published route for a developer to ask for access
+        is a dead link.
+  thirdPartyEvidence:
+    - url: https://www.greenbuttonalliance.org/canadian-initiatives
+      httpStatus: 200
+      quote: >-
+        Nova Scotia Power is Certified to ESPI v.3.3 for Download My Data (DMD) with
+        CMD Certification planned.
+      note: >-
+        Nova Scotia Power is the only Canadian utility named on the Green Button
+        Alliance's Canadian Initiatives page with a confirmed certification.
+    - url: https://www.greenbuttonalliance.org/certification
+      httpStatus: 200
+      note: >-
+        Describes the DMD and CMD certification programs. No public registry of
+        certified organizations is linked from this page, so the certification claim
+        above is the strongest public record found.
+
+dataStandard:
+  name: NAESB ESPI (Green Button)
+  version: v3.3
+  profilesRequiredByLaw:
+    - Download My Data (DMD)
+    - Connect My Data (CMD)
+  profilesCertified:
+    - Download My Data (DMD)
+  profilesNotCertified:
+    - Connect My Data (CMD)
+  note: >-
+    ESPI is named directly in the Nova Scotia statute (REQ.21.1.5t / REQ.21.2.6t). No
+    other standard reference was found — no CDR Consumer Data Standards (Canada has no
+    equivalent), no OCPP/OCPI on the EV network pages, no OpenADR, no IEEE 2030.5, no
+    IEC CIM 61968/61970 published externally.
+
+consumerVsMarketDataSplit:
+  consumerDataApi: false
+  consumerDataFinding: |
+    No third party can obtain an individual Nova Scotia Power customer's usage or
+    billing data through a documented API. The Green Button surface that exists
+    (greenbutton.nspower.ca) is a customer self-service download behind SAML SSO. The
+    Connect My Data profile — the authorization-code flow that would let an accredited
+    or approved application pull a consenting customer's interval data — is not
+    certified, and the marketplace that would approve such applications is closed.
+    myaccount.nspower.ca similarly offers downloadable usage history to the account
+    holder only.
+  marketDataOpen: true
+  marketDataFinding: |
+    Genuinely open, anonymous, no login, no licence click-through — but bulk files, not
+    an API. oasis.nspower.ca is a FERC-style Open Access Same-time Information System
+    covering monthly reports, forecasts and assessments, distribution hosting capacity,
+    system reports and messages, standards and codes, and wholesale market documents.
+    Hourly net energy flow reports for the NS-NB interconnection and Onslow South are
+    published as CSV and HTM from 2012 through 2025. Verified by downloading the 2025
+    NS-NB tie CSV anonymously: HTTP 200, 253,453 bytes, content-type
+    application/octet-stream.
+  marketDataSample:
+    - url: https://www.nspower.ca/docs/default-source/monthly-reports/2025-ns-nb-tie-monthly-report(csv).csv?sfvrsn=c7ef2a36_13&download=true
+      httpStatus: 200
+      bytes: 253453
+      contentType: application/octet-stream
+      fetched: '2026-07-27'
+  undocumentedFeedObserved:
+    url: https://outagemap.nspower.ca/resources/data/external/interval_generation_data/metadata.json
+    httpStatus: 200
+    body: '{"directory":"2026_07_27_12_31_30"}'
+    fetched: '2026-07-27'
+    note: >-
+      Real JSON, reachable anonymously, but this is stock KUBRA outage-map vendor
+      infrastructure, not documented or advertised by Nova Scotia Power as an API. It
+      is recorded here as an observation and deliberately NOT listed in apis.yml,
+      because listing it would represent an undocumented vendor artifact as a
+      first-party public API.
+
+accessGate:
+  gate: customer-account-required
+  whatADeveloperMustDo: |
+    There is no route a developer can complete today.
+      1. To read your OWN data: create a Nova Scotia Power MyAccount, log in through
+         accounts.nspower.ca (SAML SSO), and download your usage from
+         greenbutton.nspower.ca or myaccount.nspower.ca. This is Download My Data — a
+         human download, not a programmatic interface.
+      2. To read a CUSTOMER's data as a third party: you would register your
+         application in the Green Button Marketplace for review and approval. Nova
+         Scotia Power states the marketplace "is currently closed", and the linked
+         registration form returns HTTP 404. There is no key issuance, no client
+         registration endpoint, no sandbox, and no published terms.
+      3. To read MARKET data: nothing at all. Browse oasis.nspower.ca and download the
+         CSV files anonymously.
+  selfServeSignup: false
+  sandbox: false
+  freeTier: not-applicable
+
+authModel:
+  scheme: SAML 2.0 SSO (browser-based, customer identity only)
+  identityProvider: accounts.nspower.ca
+  identityProviderVendor: >-
+    LoginRadius — accounts.nspower.ca resolves via CNAME chain
+    novascotiapower.hub.loginradius.com -> hub.loginradius.com -> td.loginradius.com
+  observedBehaviour: >-
+    Every path requested on greenbutton.nspower.ca, including nonexistent ones,
+    redirects to
+    https://accounts.nspower.ca/service/saml/idp/login?appName=greenbutton&SAMLRequest=...
+    with a RelayState. The host is a SAML service provider fronting a customer portal.
+  oauth2: not published
+  openIdConnectDiscovery:
+    - url: https://accounts.nspower.ca/.well-known/openid-configuration
+      httpStatus: 404
+      body: '{"ErrorCode":404,"Message":"Resource not found","Description":"Sorry, the resource you were looking for was not found."}'
+    - url: https://novascotiapower.hub.loginradius.com/.well-known/openid-configuration
+      httpStatus: 404
+    - url: https://www.nspower.ca/.well-known/openid-configuration
+      httpStatus: 404
+  apiKeys: none published
+  mtls: none published
+  accreditation: >-
+    None. Canada has no accredited-data-recipient regime for energy. Approval would
+    have been by Nova Scotia Power's own marketplace review, which is closed.
+
+homeMarket:
+  country: Canada
+  province: Nova Scotia
+  regulator: >-
+    Nova Scotia Energy and Regulatory Boards Tribunal (NSERBT), successor to the Nova
+    Scotia Utility and Review Board (NSUARB)
+  marketStructure: >-
+    Vertically integrated investor-owned franchise monopoly. Nova Scotia has no
+    competitive wholesale electricity market and no independent system operator
+    equivalent to IESO (Ontario) or AESO (Alberta); Nova Scotia Power operates its own
+    OASIS under an open access transmission tariff. This is also notable because most
+    Canadian provincial utilities are Crown corporations — Nova Scotia Power is one of
+    the few investor-owned ones, a subsidiary of Emera Inc.
+  parentCompany: Emera Inc.
+
+probes:
+  method: >-
+    curl -sIL with a desktop browser user agent, following redirects, 20-30s timeout,
+    on 2026-07-27. HTTP status recorded for every URL. 000 = DNS or TLS failure.
+  subdomains:
+    - url: https://nspower.ca
+      httpStatus: 200
+      note: redirects to https://www.nspower.ca/
+    - url: https://www.nspower.ca
+      httpStatus: 200
+    - url: https://developer.nspower.ca
+      httpStatus: 000
+      note: DNS does not resolve
+    - url: https://developers.nspower.ca
+      httpStatus: 000
+      note: DNS does not resolve
+    - url: https://api.nspower.ca
+      httpStatus: 000
+      note: DNS does not resolve
+    - url: https://docs.nspower.ca
+      httpStatus: 000
+      note: DNS does not resolve
+    - url: https://data.nspower.ca
+      httpStatus: 000
+      note: DNS does not resolve
+    - url: https://greenbutton.nspower.ca
+      httpStatus: 200
+      note: >-
+        Resolves to 34.8.239.233. 302s to the accounts.nspower.ca SAML IdP. No
+        anonymous content of any kind.
+    - url: https://greenbuttonuat.nspower.ca
+      httpStatus: 000
+      note: >-
+        DNS resolves to 8.232.221.205 and TLS negotiates, but the certificate has no
+        subject alternative name matching the host, so the connection is closed. A UAT
+        environment exists but is not a usable public surface. Surfaced in search
+        results as "GreenButton-Login".
+    - url: https://accounts.nspower.ca
+      httpStatus: 200
+      note: LoginRadius-hosted customer identity hub
+    - url: https://myaccount.nspower.ca
+      httpStatus: 200
+      note: redirects to /auth.aspx — customer login
+    - url: https://oasis.nspower.ca
+      httpStatus: 200
+      note: >-
+        Public transmission/system information site, Sitefinity 14.4 CMS, anonymous
+    - url: https://outagemap.nspower.ca
+      httpStatus: 200
+    - url: https://outagereport.nspower.ca
+      httpStatus: 200
+      note: linked from the outages page
+  paths:
+    - url: https://www.nspower.ca/developers
+      httpStatus: 404
+    - url: https://www.nspower.ca/api
+      httpStatus: 404
+    - url: https://www.nspower.ca/docs
+      httpStatus: 404
+    - url: https://www.nspower.ca/data
+      httpStatus: 404
+    - url: https://www.nspower.ca/openapi.json
+      httpStatus: 404
+    - url: https://www.nspower.ca/swagger.json
+      httpStatus: 404
+    - url: https://www.nspower.ca/api-docs
+      httpStatus: 404
+    - url: https://www.nspower.ca/.well-known/openid-configuration
+      httpStatus: 404
+    - url: https://www.nspower.ca/.well-known/security.txt
+      httpStatus: 404
+    - url: https://www.nspower.ca/greenbutton
+      httpStatus: 404
+    - url: https://www.nspower.ca/green-button
+      httpStatus: 404
+    - url: https://www.nspower.ca/sitemap.xml
+      httpStatus: 404
+    - url: https://www.nspower.ca/sitemap
+      httpStatus: 200
+      note: >-
+        HTML sitemap reviewed in full. No developer, API, data or Green Button
+        technical page is listed anywhere in it.
+    - url: https://www.nspower.ca/robots.txt
+      httpStatus: 200
+      body: "User-agent: *\nDisallow: /WindFarmMap/"
+    - url: https://greenbutton.nspower.ca/openapi.json
+      httpStatus: 200
+      note: soft — 302 to SAML login, not a spec
+    - url: https://greenbutton.nspower.ca/swagger.json
+      httpStatus: 200
+      note: soft — 302 to SAML login, not a spec
+    - url: https://greenbutton.nspower.ca/api-docs
+      httpStatus: 200
+      note: soft — 302 to SAML login, not a spec
+    - url: https://greenbutton.nspower.ca/developers
+      httpStatus: 200
+      note: soft — 302 to SAML login, not a spec
+    - url: https://greenbutton.nspower.ca/DataCustodian/espi/1_1/resource/ApplicationInformation
+      httpStatus: 200
+      note: >-
+        Standard ESPI DataCustodian resource path. 302s to SAML login like every other
+        path — this host does not serve ESPI resources anonymously and there is no
+        evidence it serves them at all.
+    - url: https://www.nspower.ca/clean-energy/todays-energy-stats
+      httpStatus: 404
+      note: >-
+        Cited by the electricitymaps-contrib DATA_SOURCES.md as the source for the
+        CA-NS zone. The page no longer exists; the live generation-mix surface that
+        third parties were scraping has been withdrawn.
+  codeHosting:
+    - url: https://api.github.com/orgs/nspower
+      httpStatus: 404
+    - url: https://api.github.com/orgs/nova-scotia-power
+      httpStatus: 404
+
+artifacts:
+  openapi: none found
+  asyncapi: none found
+  postman: none found
+  graphql: none found
+  sdk: none found
+  specsHarvested: 0
+  note: >-
+    openapi/ directory omitted because nothing real was found. No contract of any kind
+    is published by Nova Scotia Power, and none was fabricated.
+
+sources:
+  - url: https://www.nspower.ca/
+    type: Website
+    httpStatus: 200
+  - url: https://www.nspower.ca/cleanandgreen/innovation
+    type: Documentation
+    httpStatus: 200
+    note: The only page on nspower.ca that describes Green Button. Scraped directly.
+  - url: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+    type: Legislation
+    httpStatus: 200
+    note: Bill 145 as passed — the statutory Green Button mandate, section 4F.
+  - url: https://www.greenbuttonalliance.org/canadian-initiatives
+    type: Certification
+    httpStatus: 200
+    note: DMD certified to ESPI v3.3, CMD planned.
+  - url: https://www.greenbuttonalliance.org/certification
+    type: Documentation
+    httpStatus: 200
+  - url: https://oasis.nspower.ca/
+    type: OpenData
+    httpStatus: 200
+  - url: https://www.nspower.ca/oasis/monthly-reports/hourly-net-energy-flows-ns-nb-interconnection
+    type: OpenData
+    httpStatus: 200
+    note: CSV and HTM hourly interconnection flow reports, 2012-2025, anonymous.
+  - url: https://news.novascotia.ca/en/2022/04/07/amendments-electricity-act-public-utilities-act
+    type: PressRelease
+    httpStatus: 403
+    note: >-
+      Government of Nova Scotia announcement of the amendments. Returned 403 to direct
+      fetch; content corroborated only through search indexing, so the statute text
+      above was taken from the legislature's own bill page instead.
+
+actions:
+  apisListed: 0
+  apisYmlCreated: true
+  reason: >-
+    apis[] is empty and that is the correct, honest outcome. Nova Scotia Power is under
+    a specific statutory obligation to publish a Green Button consumer data API and has
+    not done so. Nothing was invented to fill the gap.
