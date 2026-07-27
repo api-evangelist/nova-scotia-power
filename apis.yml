@@ -43,6 +43,18 @@ modified: '2026-07-27'
 specificationVersion: '0.19'
 apis: []
 common:
+- type: DomainSecurity
+  url: security/nova-scotia-power-domain-security.yml
+- type: Authentication
+  url: authentication/nova-scotia-power-authentication.yml
+- type: Conventions
+  url: conventions/nova-scotia-power-conventions.yml
+- type: Conformance
+  url: conformance/nova-scotia-power-conformance.yml
+- type: Lifecycle
+  url: lifecycle/nova-scotia-power-lifecycle.yml
+- type: LLMsTxt
+  url: llms/nova-scotia-power-llms.txt
 - type: Website
   url: https://www.nspower.ca/
 - type: About
@@ -56,6 +68,8 @@ common:
 - type: CustomerPortal
   url: https://myaccount.nspower.ca/
 - type: OpenData
+  url: https://www.nspower.ca/oasis
+- type: OpenData
   url: https://oasis.nspower.ca/
 - type: Documentation
   url: https://www.nspower.ca/oasis/monthly-reports
@@ -63,13 +77,39 @@ common:
   url: https://www.nspower.ca/oasis/system-reports-messages
 - type: Documentation
   url: https://www.nspower.ca/oasis/distribution-hosting-capacity
+- type: OpenData
+  url: https://www.nspower.ca/oasis/forecasts-assessments
+- type: OpenData
+  url: https://www.nspower.ca/oasis/wholesale-market-documents
+- type: OpenData
+  url: https://www.nspower.ca/oasis/standards-codes
+- type: OpenData
+  url: https://www.nspower.ca/oasis/transmission-customer-procedures
+- type: OpenData
+  url: https://www.nspower.ca/oasis/generation-interconnection-procedures
+- type: OpenData
+  url: https://www.nspower.ca/oasis/regulatory-documents
 - type: Regulatory
   url: https://www.nspower.ca/about-us/regulations/regulatory-initiatives
+- type: Regulation
+  url: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+- type: Standard
+  url: https://www.greenbuttonalliance.org/canadian-initiatives
 - type: Legal
+  url: https://www.nspower.ca/legal
+- type: TermsOfService
   url: https://www.nspower.ca/legal
 - type: PrivacyPolicy
   url: https://www.nspower.ca/privacy-statement
-- type: StatusPage
+- type: Support
+  url: https://www.nspower.ca/customer-service
+- type: Blog
+  url: https://www.nspower.ca/about-us/articles
+- type: News
+  url: https://www.nspower.ca/about-us/press-releases
+- type: Careers
+  url: https://www.nspower.ca/about-us/careers
+- type: OutageMap
   url: https://outagemap.nspower.ca/
 maintainers:
 - FN: Kin Lane

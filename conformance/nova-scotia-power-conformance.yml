@@ -1,0 +1,175 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.greenbuttonalliance.org/canadian-initiatives
+note: >-
+  Standards conformance for Nova Scotia Power, asserted from the Green Button
+  Alliance's published certification statement, from the Nova Scotia statute that
+  binds NSPI, from Nova Scotia Power's own Green Button page, and from live probes
+  of every NSPI host. Nova Scotia Power publishes no machine-readable contract, so
+  nothing here is derived from a specification. Every entry carries its evidence;
+  where a standard is simply absent it is recorded as `conforms: false` rather
+  than omitted, because the absence is the finding.
+standards:
+- id: green-button-download-my-data
+  conforms: true
+  version: ESPI v3.3
+  evidence: >-
+    The Green Button Alliance's Canadian Initiatives page states verbatim, "Nova
+    Scotia Power is Certified to ESPI v.3.3 for Download My Data (DMD) with CMD
+    Certification planned" (certification recorded May 2023). This is
+    certification by the body the Nova Scotia statute names, so it is more than a
+    self-claim — but DMD is a file download for an authenticated account holder,
+    not an API, and it could not be independently exercised: every path on
+    greenbutton.nspower.ca 302s to a SAML login.
+- id: green-button-connect-my-data
+  conforms: false
+  evidence: >-
+    NOT certified. The Green Button Alliance lists CMD certification as "planned".
+    No OAuth 2.0 authorization endpoint exists — https://greenbutton.nspower.ca/oauth/authorize
+    and /DataCustodian/oauth/authorize both 302 to the SAML customer IdP. Nova
+    Scotia Power's own Innovation page states "Our Green Button Marketplace is
+    currently closed", and the third-party registration form it links
+    (/cleanandgreen/innovation/green-button-registration-form) returns HTTP 404.
+    This is the half of Green Button that constitutes an actual API.
+- id: naesb-req21-espi
+  conforms: partial
+  version: '3.3'
+  evidence: >-
+    Named directly in the Nova Scotia statute (s. 4F(1)(c) references REQ.21.1.5t
+    and REQ.21.2.6t) and certified for the DMD profile only. The ESPI
+    DataCustodian resource paths (/DataCustodian/espi/1_1/resource/ApplicationInformation
+    and /espi/1_1/resource/ApplicationInformation) are not served — both 302 to the
+    SAML IdP.
+- id: espi-atom-xml
+  conforms: unknown
+  evidence: >-
+    ESPI payloads are Atom-based XML by standard. Nova Scotia Power does not state
+    the format of its Download My Data export anywhere on its public site, and the
+    export is behind SAML, so the payload could not be inspected. Not asserted.
+- id: oauth2-authorization-code
+  conforms: false
+  evidence: >-
+    No OAuth 2.0 surface of any kind is published. Authentication on every Nova
+    Scotia Power customer surface is browser-based SAML 2.0 SSO through
+    accounts.nspower.ca (LoginRadius). No client registration, no authorization
+    endpoint, no token endpoint.
+- id: saml2-sso
+  conforms: true
+  evidence: >-
+    Every path on greenbutton.nspower.ca redirects to
+    https://accounts.nspower.ca/service/saml/idp/login?appName=greenbutton&SAMLRequest=...
+    with a RelayState — a SAML 2.0 service provider fronting the Green Button
+    customer portal. This is human customer identity, not API authorization.
+- id: oauth2-discovery-rfc8414
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server returns HTTP 404 on www.nspower.ca,
+    accounts.nspower.ca and myaccount.nspower.ca, and 302s to the login page on
+    greenbutton.nspower.ca.
+- id: openid-connect
+  conforms: false
+  evidence: >-
+    /.well-known/openid-configuration returns HTTP 404 on www.nspower.ca and on the
+    LoginRadius identity hosts (accounts.nspower.ca, myaccount.nspower.ca,
+    novascotiapower.hub.loginradius.com). No OIDC discovery document is served.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger definition exists on any Nova Scotia Power host.
+    /openapi.json, /swagger.json and /api-docs return HTTP 404 on www.nspower.ca,
+    redirect on oasis.nspower.ca, and 302 to SAML on greenbutton.nspower.ca. No
+    api/developer/docs/data subdomain resolves.
+- id: graphql
+  conforms: false
+  evidence: /graphql returns 404/redirect on every host probed. No GraphQL surface.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is documented anywhere.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No error contract is published; there is no public API to return errors.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: >-
+    /.well-known/security.txt and /security.txt return HTTP 404 on www.nspower.ca
+    and are not served on any other host.
+- id: api-catalog-rfc9727
+  conforms: false
+  evidence: '/.well-known/api-catalog returns HTTP 404 on www.nspower.ca.'
+- id: odata
+  conforms: false
+  evidence: >-
+    https://www.nspower.ca/api/default/ returns HTTP 401 with content-type
+    application/json; odata.metadata=minimal — Progress Sitefinity's built-in OData
+    Web Services endpoint, closed to anonymous callers. Undocumented vendor CMS
+    infrastructure, not a Nova Scotia Power API; recorded but not claimed.
+- id: ferc-oasis-naesb-weq-002
+  conforms: partial
+  evidence: >-
+    Nova Scotia Power operates an Open Access Same-time Information System under
+    its Open Access Transmission Tariff (in effect 1 November 2005). The public
+    face at https://www.nspower.ca/oasis is a document/report site — anonymous CSV,
+    HTM and PDF postings, no S&CP template query interface. The transactional
+    reservation node is hosted by OATI at https://www.oasis.oati.com/ and is marked
+    "Secure Site/Registration Required"; that host would not complete a TLS
+    handshake from this probe (recorded as 000), so no NSPI OASIS S&CP template
+    endpoint could be verified.
+- id: ocpp
+  conforms: false
+- id: ocpi
+  conforms: false
+- id: openadr
+  conforms: false
+- id: ieee-2030-5
+  conforms: false
+- id: iec-cim-61968-61970
+  conforms: false
+regulatory:
+- id: ns-electricity-act-s4f
+  name: Electricity Act (Nova Scotia), s. 4F — added by Bill 145, SNS 2022, c. 12
+  url: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+  applies: true
+  applies_evidence: >-
+    The section names Nova Scotia Power Incorporated directly. It is not a class
+    regulation — the obligation is on this one company.
+  obligation: >-
+    Implement the NAESB ESPI standard and be certified by the Green Button Alliance
+    to BOTH "Connect My Data" and "Download My Data" on or before 1 April 2023,
+    unless granted an extension by the Board.
+  deadline: '2023-04-01'
+  status: partially met — DMD certified, CMD not certified, deadline passed
+  regulator: >-
+    Nova Scotia Energy and Regulatory Boards Tribunal (NSERBT), successor to the
+    Nova Scotia Utility and Review Board (NSUARB)
+certifications:
+- id: green-button-alliance-dmd
+  standard: NAESB ESPI
+  version: '3.3'
+  profile: Download My Data (DMD)
+  claimed: true
+  verified: true
+  verified_by: Green Button Alliance
+  verified_source: https://www.greenbuttonalliance.org/canadian-initiatives
+  recorded: '2023-05'
+  quote: >-
+    "Nova Scotia Power is Certified to ESPI v.3.3 for Download My Data (DMD) with
+    CMD Certification planned."
+- id: green-button-alliance-cmd
+  standard: NAESB ESPI
+  profile: Connect My Data (CMD)
+  claimed: false
+  verified: false
+  note: Listed by the Green Button Alliance as "planned". Required by statute since 2023-04-01.
+compliance_program_published: false
+compliance_program_note: >-
+  Nova Scotia Power publishes no trust centre, no SOC 2 / ISO 27001 / PCI DSS
+  attestation page and no vulnerability disclosure policy. Probes of /security,
+  /cyber-security, /responsible-disclosure, /report-a-vulnerability and /trust all
+  returned HTTP 404, and /.well-known/security.txt returned HTTP 404. The Green
+  Button Alliance DMD certification is a standards conformance certification, not a
+  published security or compliance programme, so no `Compliance` pointer is emitted.
+related:
+- authentication/nova-scotia-power-authentication.yml
+- conventions/nova-scotia-power-conventions.yml
+- lifecycle/nova-scotia-power-lifecycle.yml
+- well-known/nova-scotia-power-well-known.yml

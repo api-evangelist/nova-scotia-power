@@ -1,0 +1,114 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.nspower.ca/cleanandgreen/innovation
+docs:
+- https://www.nspower.ca/cleanandgreen/innovation
+- https://greenbutton.nspower.ca/
+- https://accounts.nspower.ca/
+note: >-
+  Nova Scotia Power publishes no API and therefore no API authentication. This
+  artifact records what actually gates its data surfaces, observed live on
+  2026-07-27, so the absence is documented rather than silent. There is no OpenAPI
+  or discovery document to derive securitySchemes from — derive-authentication.py
+  has no spec to read. Everything below was observed by following redirects and
+  probing discovery paths; nothing is inferred from what the standard would imply.
+summary:
+  types:
+  - saml2
+  api_auth_available: false
+  oauth2_flows: []
+  api_key_in: []
+  discovery_document: false
+  self_serve_credentials: false
+  third_party_access: closed
+schemes:
+- name: nspower-customer-saml-sso
+  type: saml2
+  description: >-
+    Browser-based SAML 2.0 single sign-on for Nova Scotia Power customers. This is
+    human identity for a self-service portal, not an API authorization scheme — it
+    issues a browser session, not a token a third party can hold.
+  identity_provider: https://accounts.nspower.ca/
+  identity_provider_vendor: >-
+    LoginRadius. accounts.nspower.ca resolves via the CNAME chain
+    novascotiapower.hub.loginradius.com -> hub.loginradius.com -> td.loginradius.com.
+  service_providers:
+  - https://greenbutton.nspower.ca/
+  - https://myaccount.nspower.ca/
+  observed_behaviour: >-
+    Every path requested on greenbutton.nspower.ca — including nonexistent ones and
+    the canonical ESPI resource paths — 302s to
+    https://accounts.nspower.ca/service/saml/idp/login?appName=greenbutton&SAMLRequest=...
+    with a RelayState.
+  hsts: 'max-age=31536000; includeSubDomains; preload (accounts and myaccount)'
+  source: https://greenbutton.nspower.ca/
+not_published:
+  oauth2: >-
+    None. The Green Button Connect My Data profile — the OAuth 2.0 authorization
+    code flow that would let a customer grant a third-party application access to
+    their interval data — is not certified and not deployed.
+    https://greenbutton.nspower.ca/oauth/authorize and
+    /DataCustodian/oauth/authorize both 302 to the SAML IdP.
+  api_keys: None published. There is no key issuance surface of any kind.
+  mtls: None published.
+  client_registration: >-
+    None. Nova Scotia Power's Innovation page states "Our Green Button Marketplace
+    is currently closed", and the linked third-party registration form at
+    /cleanandgreen/innovation/green-button-registration-form returns HTTP 404 — the
+    only published route for a developer to request access is a dead link.
+  scopes: >-
+    No scope surface exists. NAESB ESPI function-block scopes (FB=...) would only
+    appear on a Connect My Data authorization request; there is no such request to
+    observe, so no scopes/ artifact is emitted.
+discovery:
+  openid_configuration:
+  - url: https://accounts.nspower.ca/.well-known/openid-configuration
+    status: 404
+    body: '{"ErrorCode":404,"Message":"Resource not found","Description":"Sorry, the resource you were looking for was not found."}'
+  - url: https://myaccount.nspower.ca/.well-known/openid-configuration
+    status: 404
+  - url: https://www.nspower.ca/.well-known/openid-configuration
+    status: 404
+  oauth_authorization_server:
+  - url: https://www.nspower.ca/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://accounts.nspower.ca/.well-known/oauth-authorization-server
+    status: 404
+  oauth_protected_resource:
+  - url: https://www.nspower.ca/.well-known/oauth-protected-resource
+    status: 404
+access_gate:
+  self_serve: false
+  gate: customer-account-required
+  developer_route: none
+  steps:
+  - >-
+    To read your OWN data: create a Nova Scotia Power MyAccount, authenticate
+    through accounts.nspower.ca (SAML SSO), and download usage from
+    greenbutton.nspower.ca or myaccount.nspower.ca. This is Download My Data — a
+    human download, not a programmatic interface.
+  - >-
+    To read a CUSTOMER's data as a third party: there is no route. The Green Button
+    Marketplace is closed and its registration form 404s.
+  - >-
+    To read MARKET data: nothing at all — https://www.nspower.ca/oasis serves CSV,
+    HTM and PDF anonymously with no login and no licence click-through.
+  contact: null
+  contact_note: >-
+    No developer, integration or Green Button contact address is published. The only
+    published channel is general customer service at
+    https://www.nspower.ca/customer-service.
+open_data_auth:
+  surface: https://www.nspower.ca/oasis
+  authentication: none
+  note: >-
+    OASIS monthly reports, system reports and hosting-capacity files are served
+    anonymously over HTTPS as bulk files. Verified anonymously: the 2025 NS-NB tie
+    monthly report CSV returned HTTP 200, 253,453 bytes. The transactional
+    reservation node is separate, hosted by OATI at https://www.oasis.oati.com/ and
+    marked "Secure Site/Registration Required".
+related:
+- conformance/nova-scotia-power-conformance.yml
+- conventions/nova-scotia-power-conventions.yml
+- lifecycle/nova-scotia-power-lifecycle.yml
+- well-known/nova-scotia-power-well-known.yml

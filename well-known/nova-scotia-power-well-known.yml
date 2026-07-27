@@ -1,0 +1,175 @@
+generated: '2026-07-27'
+method: probed
+source: live HTTP probes of every Nova Scotia Power host, 2026-07-27
+found: false
+note: >-
+  No /.well-known/ discovery surface exists on any Nova Scotia Power host. Every
+  candidate below was fetched and its body inspected — no raw file was saved and no
+  `WellKnown` or `SecurityTxt` pointer is wired, because nothing parseable was
+  returned. Three response shapes matter when reading the statuses:
+  www.nspower.ca (Sitefinity 14.4) returns an honest HTTP 404 with a 59,065-byte
+  HTML error page; oasis.nspower.ca 301s every path to https://www.nspower.ca/oasis
+  and greenbutton.nspower.ca 302s every path to the SAML IdP, so a `200` on those
+  two hosts is a redirect landing page, NOT a document; accounts.nspower.ca and
+  myaccount.nspower.ca (LoginRadius) return a JSON 404 envelope. A 200 here is not
+  evidence of a discovery document, and none of them is one.
+hosts_probed:
+- www.nspower.ca
+- oasis.nspower.ca
+- accounts.nspower.ca
+- greenbutton.nspower.ca
+- myaccount.nspower.ca
+- outagemap.nspower.ca
+hosts_not_resolving:
+- api.nspower.ca
+- developer.nspower.ca
+- developers.nspower.ca
+- docs.nspower.ca
+- data.nspower.ca
+documents:
+- host: www.nspower.ca
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /security.txt
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /.well-known/oauth-protected-resource
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /.well-known/api-catalog
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /.well-known/ai-plugin.json
+  status: 404
+  file: null
+- host: www.nspower.ca
+  path: /llms.txt
+  status: 404
+  file: null
+- host: accounts.nspower.ca
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+  note: >-
+    LoginRadius JSON error envelope —
+    {"ErrorCode":404,"Message":"Resource not found",...}. This is the customer
+    identity provider; it publishes no OIDC discovery document.
+- host: accounts.nspower.ca
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  file: null
+- host: accounts.nspower.ca
+  path: /.well-known/oauth-protected-resource
+  status: 404
+  file: null
+- host: accounts.nspower.ca
+  path: /.well-known/security.txt
+  status: 404
+  file: null
+- host: myaccount.nspower.ca
+  path: /.well-known/openid-configuration
+  status: 404
+  file: null
+  note: LoginRadius JSON error envelope, same as accounts.nspower.ca.
+- host: greenbutton.nspower.ca
+  path: /.well-known/security.txt
+  status: 200
+  file: null
+  note: 302 to the SAML IdP login page (19,305-byte HTML), not a security.txt.
+- host: greenbutton.nspower.ca
+  path: /.well-known/openid-configuration
+  status: 200
+  file: null
+  note: 302 to the SAML IdP login page, not a discovery document.
+- host: greenbutton.nspower.ca
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  file: null
+  note: 302 to the SAML IdP login page, not a discovery document.
+- host: greenbutton.nspower.ca
+  path: /.well-known/api-catalog
+  status: 200
+  file: null
+  note: 302 to the SAML IdP login page, not an API catalog.
+- host: oasis.nspower.ca
+  path: /.well-known/security.txt
+  status: 200
+  file: null
+  note: >-
+    301 to https://www.nspower.ca/oasis (66,201-byte HTML page). Every path on this
+    host redirects there; oasis.nspower.ca is now a vanity redirect, not a site.
+- host: oasis.nspower.ca
+  path: /.well-known/api-catalog
+  status: 200
+  file: null
+  note: 301 to https://www.nspower.ca/oasis, not an API catalog.
+- host: outagemap.nspower.ca
+  path: /.well-known/security.txt
+  status: 403
+  file: null
+  note: KUBRA-hosted outage map; CDN returns an XML 403 for unknown paths.
+- host: outagemap.nspower.ca
+  path: /.well-known/openid-configuration
+  status: 403
+  file: null
+spec_paths_probed:
+- url: https://oasis.nspower.ca/openapi.json
+  status: 301
+  note: redirect to https://www.nspower.ca/oasis, not a specification
+- url: https://oasis.nspower.ca/swagger.json
+  status: 301
+  note: redirect to https://www.nspower.ca/oasis, not a specification
+- url: https://oasis.nspower.ca/graphql
+  status: 301
+  note: redirect to https://www.nspower.ca/oasis, no GraphQL surface
+- url: https://greenbutton.nspower.ca/DataCustodian/espi/1_1/resource/ApplicationInformation
+  status: 302
+  note: >-
+    Canonical NAESB ESPI DataCustodian resource path. 302s to the SAML IdP like
+    every other path on the host — no ESPI resource is served, anonymously or
+    otherwise.
+- url: https://greenbutton.nspower.ca/espi/1_1/resource/ApplicationInformation
+  status: 302
+  note: 302 to the SAML IdP.
+- url: https://greenbutton.nspower.ca/oauth/authorize
+  status: 302
+  note: >-
+    302 to the SAML IdP, not an OAuth 2.0 authorization endpoint. There is no
+    Connect My Data authorization surface.
+- url: https://greenbutton.nspower.ca/DataCustodian/oauth/authorize
+  status: 302
+  note: 302 to the SAML IdP.
+cms_endpoints_observed:
+- url: https://www.nspower.ca/api/default/
+  status: 401
+  content_type: application/json; odata.metadata=minimal
+  body: '{"error":{"code":"Unauthorized","message":"The current user is not allowed access"}}'
+  note: >-
+    Progress Sitefinity's built-in OData Web Services endpoint, present on every
+    Sitefinity install and closed to anonymous callers. It is undocumented vendor
+    CMS infrastructure, not a Nova Scotia Power API — recorded as an observation
+    and deliberately NOT listed in apis.yml, on the same principle as the KUBRA
+    outage-map feed recorded in review.yml.
+- url: https://www.nspower.ca/api/default/$metadata
+  status: 401
+  note: OData $metadata document is authenticated; no anonymous service document.
+- url: https://www.nspower.ca/RestApi/metadata
+  status: 404
+  note: Sitefinity legacy REST endpoint; not enabled.
+related:
+- authentication/nova-scotia-power-authentication.yml
+- conformance/nova-scotia-power-conformance.yml
+- security/nova-scotia-power-domain-security.yml

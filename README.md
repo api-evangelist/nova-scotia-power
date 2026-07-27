@@ -92,6 +92,35 @@ The linked third-party registration form returns HTTP 404.
 - [Privacy Statement](https://www.nspower.ca/privacy-statement)
 - [Outage Map](https://outagemap.nspower.ca/)
 
+## Artifacts
+
+Nothing here is a harvested provider artifact, because Nova Scotia Power publishes none.
+Each file below records what was probed and what was found, so the absence is documented
+rather than assumed.
+
+- [authentication/](authentication/nova-scotia-power-authentication.yml) — SAML 2.0 SSO via
+  LoginRadius; no OAuth2, no API keys, no mTLS, no client registration. Every OIDC/OAuth
+  discovery path 404s.
+- [conformance/](conformance/nova-scotia-power-conformance.yml) — Green Button DMD certified
+  to ESPI v3.3 (verified against the Green Button Alliance); CMD not certified. Standards
+  asserted with evidence, absences recorded rather than omitted.
+- [conventions/](conventions/nova-scotia-power-conventions.yml) — cross-cutting semantics for
+  the bulk-file surface, plus the two undocumented vendor endpoints observed (KUBRA outage
+  JSON, Sitefinity OData 401) and deliberately not listed as APIs.
+- [lifecycle/](lifecycle/nova-scotia-power-lifecycle.yml) — the statutory timeline: mandate,
+  deadline, partial certification, and 3 years 3 months outstanding.
+- [well-known/](well-known/nova-scotia-power-well-known.yml) — every `/.well-known/` and spec
+  path probed on six hosts. No discovery document exists; a `200` on the redirecting hosts is
+  a landing page, not a document.
+- [packages/](packages/nova-scotia-power-packages.yml) — eight registries and five GitHub org
+  candidates searched. No first-party client library, no GitHub organization.
+- [security/](security/nova-scotia-power-domain-security.yml) — TLS/HSTS/DNSSEC/CAA/SPF/DMARC
+  probe across seven hosts. TLS 1.3 everywhere, DMARC p=reject, no DNSSEC, no CAA.
+- [llms/](llms/nova-scotia-power-llms.txt) — generated llms.txt for agents.
+
+The outage map is wired as `OutageMap`, not `StatusPage`: it is a KUBRA-hosted consumer
+outage widget, not an API service-status surface.
+
 ## Maintainers
 
 - Kin Lane — kin@apievangelist.com

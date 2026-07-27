@@ -1,0 +1,52 @@
+generated: '2026-07-27'
+method: searched
+source: npm, PyPI, Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist, crates.io, GitHub
+found: false
+note: >-
+  No first-party Nova Scotia Power client library exists in any public package
+  registry, and there is nothing for one to wrap — Nova Scotia Power publishes no
+  API. The npm registry search for "nspower" returns 0 packages; "nova scotia
+  power" returns only unrelated matches on the word "power" (power-assert and its
+  family). PyPI has no nspower, nova-scotia-power or novascotiapower project. No
+  GitHub organization exists under nspower, novascotiapower, nova-scotia-power or
+  nspowerinc — all return HTTP 404 from the GitHub API. Nova Scotia Power
+  publishes no SDK page, no code samples and no source repository. No `Packages`
+  and no `SDKs` pointer is wired.
+packages: []
+registries_searched:
+- registry: npm
+  queries: [nspower, nova scotia power]
+  result: 0 first-party packages
+- registry: pypi
+  queries: [nspower, nova-scotia-power, novascotiapower]
+  result: HTTP 404 for every candidate
+- registry: maven-central
+  result: no first-party artifact
+- registry: nuget
+  result: no first-party artifact
+- registry: pkg.go.dev
+  result: no first-party module
+- registry: rubygems
+  result: no first-party gem
+- registry: packagist
+  result: no first-party package
+- registry: crates.io
+  result: no first-party crate
+code_hosting_probed:
+- url: https://api.github.com/orgs/nspower
+  status: 404
+- url: https://api.github.com/orgs/novascotiapower
+  status: 404
+- url: https://api.github.com/orgs/nova-scotia-power
+  status: 404
+- url: https://api.github.com/orgs/nspowerinc
+  status: 404
+- url: https://api.github.com/orgs/emera
+  status: 404
+  note: The parent company, Emera Inc., has no GitHub organization under that name either.
+third_party_ecosystem_note: >-
+  A developer wanting to consume Green Button / NAESB ESPI data would use the
+  Green Button Alliance's open-source OpenESPI projects
+  (https://github.com/GreenButtonAlliance). Those are standard-body reference
+  implementations, not Nova Scotia Power client libraries, and are not recorded
+  here as first-party.

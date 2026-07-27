@@ -1,0 +1,114 @@
+generated: '2026-07-27'
+method: searched
+source: https://www.nspower.ca/cleanandgreen/innovation
+note: >-
+  Cross-cutting request/response semantics for Nova Scotia Power's data surfaces.
+  There is no API, so most of this document records `unknown` or `not applicable`
+  rather than describing conventions that do not exist. What IS conventional here is
+  the bulk-file surface: OASIS publishes reports over plain anonymous HTTPS with
+  Sitefinity's document URLs. Nothing below is inherited from the NAESB ESPI standard
+  and asserted as Nova Scotia Power's behaviour — where the standard would imply
+  something but nothing was observed, it is recorded as unknown.
+authentication:
+  style: SAML 2.0 browser SSO for customer surfaces; none for the open data surface
+  detail: authentication/nova-scotia-power-authentication.yml
+  api_credentials: none issued; no client registration surface exists
+  transport: >-
+    HTTPS with TLS 1.3 on every host probed. HSTS max-age=31536000;
+    includeSubDomains; preload on accounts.nspower.ca and myaccount.nspower.ca and
+    max-age=31536000 on www.nspower.ca; no HSTS header observed on
+    greenbutton.nspower.ca.
+authorization:
+  model: not applicable
+  note: >-
+    Third-party authorization would be the Green Button Connect My Data OAuth flow.
+    It is not certified and not deployed, so there is no consent, scope or
+    revocation model to document. See conformance/nova-scotia-power-conformance.yml.
+payload:
+  api_format: not applicable
+  bulk_formats:
+  - text/csv
+  - text/html
+  - application/pdf
+  - application/octet-stream
+  bulk_note: >-
+    OASIS monthly reports are posted as paired CSV and HTM files, tariffs and
+    procedures as PDF. Verified: the 2025 NS-NB interconnection hourly net energy
+    flow CSV returned HTTP 200, 253,453 bytes, content-type
+    application/octet-stream. Files carry Sitefinity cache-busting query strings
+    (?sfvrsn=...&download=true), so URLs are not stable identifiers across content
+    revisions.
+  json: false
+  download_my_data_format: >-
+    unknown — Nova Scotia Power does not state the export format of its certified
+    Download My Data feature anywhere on its public site, and the export is behind
+    SAML, so it could not be inspected. ESPI DMD is Atom-based XML by standard, but
+    that is the standard's property, not an observed Nova Scotia Power behaviour.
+pagination:
+  style: not applicable
+  note: The OASIS surface is a directory of files, not a paged collection.
+idempotency:
+  supported: false
+  note: >-
+    No API exists, therefore no idempotency contract, no idempotency key header and
+    no replay semantics. Every observed surface is a read of a static file or an
+    authenticated human download. No `Idempotency` pointer is emitted.
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: >-
+    No rate limits are published and none were observed on the anonymous OASIS file
+    surface. robots.txt on www.nspower.ca is "User-agent: *\nDisallow: /WindFarmMap/"
+    — the only crawl restriction Nova Scotia Power publishes.
+errors:
+  envelope: not applicable
+  problem_details_rfc9457: false
+  observed_shapes:
+  - host: www.nspower.ca
+    shape: 'HTTP 404 with a 59,065-byte HTML error page (Sitefinity 14.4)'
+  - host: accounts.nspower.ca / myaccount.nspower.ca
+    shape: '{"ErrorCode":404,"Message":"Resource not found","Description":"..."} (LoginRadius)'
+  - host: www.nspower.ca/api/default/
+    shape: '{"error":{"code":"Unauthorized","message":"The current user is not allowed access"}} (Sitefinity OData, HTTP 401)'
+  - host: outagemap.nspower.ca
+    shape: XML 403 from the KUBRA CDN for unknown paths
+  note: >-
+    These are vendor platform error shapes surfaced incidentally by probing. None is
+    a documented Nova Scotia Power error contract, and no errors/ artifact is
+    emitted from them.
+versioning:
+  scheme: external-standard
+  current: NAESB ESPI v3.3 (the version the Download My Data certification names)
+  published_by_provider: false
+  detail: lifecycle/nova-scotia-power-lifecycle.yml
+  note: Nova Scotia Power states no API version anywhere; there is no API to version.
+request_tracing:
+  request_id_header: unknown
+webhooks:
+  supported: false
+  note: >-
+    No webhook, callback, event or streaming surface is documented on any Nova
+    Scotia Power property. No AsyncAPI or Webhooks artifact is emitted — the absence
+    is genuine, not unharvested.
+undocumented_vendor_feeds_observed:
+- url: https://outagemap.nspower.ca/resources/data/external/interval_generation_data/metadata.json
+  status: 200
+  body: '{"directory":"2026_07_27_12_31_30"}'
+  note: >-
+    Real JSON, anonymously reachable, but stock KUBRA outage-map vendor
+    infrastructure — not documented or advertised by Nova Scotia Power as an API.
+    Recorded as an observation and deliberately NOT listed in apis.yml.
+- url: https://www.nspower.ca/api/default/
+  status: 401
+  note: >-
+    Progress Sitefinity OData Web Services endpoint, present on every Sitefinity
+    install and closed to anonymous callers. Same treatment: observed, not claimed.
+support:
+  operational_contact: null
+  contact_page: https://www.nspower.ca/customer-service
+  note: No developer, integration or Green Button contact address is published.
+related:
+- authentication/nova-scotia-power-authentication.yml
+- conformance/nova-scotia-power-conformance.yml
+- lifecycle/nova-scotia-power-lifecycle.yml
+- well-known/nova-scotia-power-well-known.yml

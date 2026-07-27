@@ -1,0 +1,111 @@
+generated: '2026-07-27'
+method: searched
+source: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+note: >-
+  Nova Scotia Power publishes no API versioning policy, no deprecation policy, no
+  SLA, no changelog, no roadmap and no API status page. The only lifecycle that
+  genuinely exists here is a statutory one: a legislated implementation deadline
+  that has passed with the API half of the obligation unmet. That is what this
+  artifact records.
+versioning:
+  scheme: external-standard
+  current: NAESB ESPI v3.3
+  published_by_provider: false
+  docs: null
+  note: >-
+    The version number comes from the Green Button Alliance's certification
+    statement, not from Nova Scotia Power, which states no version anywhere.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: >-
+    No deprecation or sunset policy is published, and there is no API surface to
+    deprecate. No `Deprecation` pointer is emitted.
+  observed_withdrawal:
+  - url: https://www.nspower.ca/clean-energy/todays-energy-stats
+    status: 404
+    note: >-
+      Cited by the electricitymaps-contrib DATA_SOURCES.md as the source for the
+      CA-NS zone. The page no longer exists — the live generation-mix surface third
+      parties were scraping was withdrawn with no notice, no sunset header and no
+      replacement. This is the closest thing to a deprecation event on record.
+sla:
+  url: null
+  uptime_target: null
+  note: No SLA, availability commitment or support target is published for any data surface.
+status_page: null
+status_page_note: >-
+  No API or platform status page exists. https://outagemap.nspower.ca/ is a
+  KUBRA-hosted electricity outage map for customers — a consumer service-interruption
+  widget operated by a vendor, not a Nova Scotia Power service-status surface and not
+  a documented API. The prior round wired it as `StatusPage`; that pointer has been
+  retyped to `OutageMap` so the profile does not claim an API status page that does
+  not exist. https://outagereport.nspower.ca/ is the customer outage-reporting form,
+  same category.
+statutory_lifecycle:
+  regime: Electricity Act (Nova Scotia) s. 4F, added by Bill 145 (SNS 2022, c. 12)
+  source: https://nslegislature.ca/legc/bills/64th_1st/3rd_read/b145.htm
+  milestones:
+  - date: '2022-04'
+    event: >-
+      Bill 145 receives Royal Assent, adding s. 4F to the Electricity Act and naming
+      Nova Scotia Power Incorporated directly.
+    status: met
+  - date: '2022-09-01'
+    event: >-
+      s. 4F(2) — deadline to present the Board a compliance plan with "an
+      implementation date that occurs no later than April 1, 2023".
+    status: unverified
+    note: No public record of the plan was found on Nova Scotia Power's or the regulator's site.
+  - date: '2023-04-01'
+    event: >-
+      s. 4F(5) — statutory deadline for Green Button Alliance certification to BOTH
+      "Connect My Data" and "Download My Data".
+    status: partially met
+  - date: '2023-05'
+    event: >-
+      Green Button Alliance records Nova Scotia Power as "Certified to ESPI v.3.3 for
+      Download My Data (DMD) with CMD Certification planned".
+    status: met (DMD leg only, one month after the deadline)
+    source: https://www.greenbuttonalliance.org/canadian-initiatives
+  - date: '2026-07-27'
+    event: >-
+      Re-verified. CMD certification still "planned". Nova Scotia Power's own page
+      still states "Our Green Button Marketplace is currently closed", and the linked
+      third-party registration form still returns HTTP 404.
+    status: outstanding
+    elapsed_past_deadline: 3 years 3 months
+  extension_granted: unknown
+  extension_note: >-
+    s. 4F(5) allows the deadline to be extended by the Board. No published Board
+    order granting an extension was found; recorded as unknown rather than as absent.
+access_lifecycle:
+  states:
+  - id: closed
+    description: >-
+      The Green Button Marketplace is closed. There is no registration, no
+      connectivity testing, no approval and no issued-credential state — the only
+      published route for a third-party application provider is a registration form
+      that 404s. A developer cannot enter the lifecycle at all.
+  connectivity_test_window_days: null
+  cure_period_days: null
+change_communication:
+  changelog: null
+  changelog_note: >-
+    No API changelog, release notes or developer bulletin is published. No
+    changelog/ artifact is emitted.
+  roadmap: null
+  roadmap_note: >-
+    No roadmap is published. The only forward-looking statement is the Green Button
+    Alliance's "CMD Certification planned" and Nova Scotia Power's "please continue
+    to check here for updates" — neither is a dated roadmap. No `Roadmap` pointer is
+    emitted.
+  news: https://www.nspower.ca/about-us/press-releases
+  articles: https://www.nspower.ca/about-us/articles
+  regulatory: https://www.nspower.ca/about-us/regulations/regulatory-initiatives
+  contact: https://www.nspower.ca/customer-service
+deprecated_operations: []
+related:
+- conformance/nova-scotia-power-conformance.yml
+- conventions/nova-scotia-power-conventions.yml
+- authentication/nova-scotia-power-authentication.yml
