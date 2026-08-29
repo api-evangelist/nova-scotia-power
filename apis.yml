@@ -23,6 +23,17 @@ description: >-
   data: its OASIS site publishes hourly net energy flow reports as anonymously downloadable
   CSV going back to 2012. Open market data, closed consumer data, and a statutory
   mandate whose API half is three years past its deadline.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://nspower.ca/images/default-source/default-album/brand/nsp-favicon.png
 tags:
 - Energy
