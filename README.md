@@ -1,4 +1,4 @@
-# Nova Scotia Power (nova-scotia-power)
+# Nova Scotia Power
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,125 +66,83 @@
 
 Nova Scotia Power Incorporated (NSPI) is the investor-owned, vertically integrated regulated electric utility serving roughly half a million customers across Nova Scotia, Canada. A subsidiary of Halifax-based Emera Inc., it owns generation, transmission and distribution and is regulated by the Nova Scotia Energy and Regulatory Boards Tribunal (formerly the NSUARB). It sits at the retail end of the value chain as a franchise monopoly rather than a competitor in an open market — Nova Scotia has no wholesale market equivalent to IESO or AESO. Its API posture is the sharpest mandate-versus-implementation split in Canadian energy: section 4F of the Electricity Act, added by Bill 145 (SNS 2022, c. 12), legally required NSPI to implement the NAESB ESPI standard and be certified by the Green Button Alliance to BOTH "Connect My Data" and "Download My Data" on or before April 1, 2023. As of July 2026 the Green Button Alliance lists NSPI as certified to ESPI v3.3 for Download My Data only, with Connect My Data certification still "planned", and NSPI's own site states the Green Button Marketplace "is currently closed" to third-party applications. There is no developer portal, no published OpenAPI, no OAuth registration and no documented consumer data API — greenbutton.nspower.ca is live but every path redirects to a SAML customer login. By contrast NSPI is genuinely open on market and system data: its OASIS site publishes hourly net energy flow reports as anonymously downloadable CSV going back to 2012. Open market data, closed consumer data, and a statutory mandate whose API half is three years past its deadline.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/nova-scotia-power/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/nova-scotia-power/refs/heads/main/apis.yml)
+**Areas:** Energy · Canada · Utilities · Electricity · Energy Retailer · Green Button · Smart Metering · Grid · Renewables · Solar · EV Charging · Energy Markets
 
-## Tags
+## Nova Scotia Power on APIs.io
 
-- Energy
-- Canada
-- Utilities
-- Electricity
-- Energy Retailer
-- Green Button
-- Smart Metering
-- Grid
-- Renewables
-- Solar
-- EV Charging
-- Energy Markets
-- Regulation
+Everything profiled for Nova Scotia Power is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nova-scotia-power/](https://apis.io/providers/nova-scotia-power/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-27
-- **Modified:** 2026-07-27
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Security (2)
 
-No public, documented API is published by Nova Scotia Power.
+Authentication, trust centre, and vulnerability disclosure.
 
-This is recorded as an empty `apis[]` rather than filled with anything approximate. See
-[review.yml](review.yml) for every URL probed and its HTTP status.
+- [Nova Scotia Power Authentication](https://apis.io/security/nova-scotia-power/nova-scotia-power-authentication/)
+- [Nova Scotia Power Domain Security](https://apis.io/security/nova-scotia-power/nova-scotia-power-domain-security/)
 
-## Mandate
+## Where to find this API
 
-| | |
-| --- | --- |
-| **Regime** | `other` — Nova Scotia Electricity Act s. 4F, added by Bill 145 (SNS 2022, c. 12). A province-level, standard-specific Green Button mandate independent of Ontario's. |
-| **Status** | `designated-not-live` |
-| **Standard** | NAESB ESPI (Green Button) v3.3 |
-| **Required by law** | Green Button Alliance certification to **both** Connect My Data and Download My Data, on or before **April 1, 2023** |
-| **Certified today** | Download My Data only. Connect My Data "planned". |
-
-Section 4F(5) of the Act reads:
-
-> Nova Scotia Power Incorporated shall implement the NAESB ESPI standard and ensure that
-> its implementation of the requirements set out in this Section is certified by the Green
-> Button Alliance to its "Connect My Data" and "Download My Data" standards on or before
-> April 1, 2023, unless granted an extension by the Board
-
-Connect My Data is the half of Green Button that is an actual API — the authorization flow
-that lets a customer grant a third-party application access to their interval data. It is
-not certified, and Nova Scotia Power's own Innovation page states:
-
-> Green Button Marketplace is currently closed. If you are a Third-Party application
-> provider and wish to have your application registered and approved to be offered, please
-> continue to check here for updates.
-
-The linked third-party registration form returns HTTP 404.
-
-## Consumer data vs market data
-
-| | |
-| --- | --- |
-| **Consumer data API** | **No.** Download My Data is a file download behind SAML SSO at `greenbutton.nspower.ca` / `myaccount.nspower.ca`. No third party can obtain a customer's usage data programmatically. |
-| **Open market data** | **Yes**, as bulk files. `oasis.nspower.ca` publishes hourly net energy flow reports (NS–NB interconnection, Onslow South) as CSV and HTM from 2012 through 2025, anonymously, with no login and no licence click-through. Verified: 2025 NS–NB tie CSV, HTTP 200, 253,453 bytes. |
-
-## Access and auth
-
-- **Access gate:** `customer-account-required`
-- **Auth:** SAML 2.0 SSO via `accounts.nspower.ca`, hosted on LoginRadius. Every path on
-  `greenbutton.nspower.ca` 302s to the SAML IdP.
-- **OIDC discovery:** `https://accounts.nspower.ca/.well-known/openid-configuration` → HTTP 404
-- **OAuth2 / API keys / mTLS:** none published
-- **Self-serve signup:** none. **Sandbox:** none.
-
-## Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.nspower.ca/)
-- [About](https://www.nspower.ca/about-us/who-we-are)
-- [Green Button](https://www.nspower.ca/cleanandgreen/innovation)
-- [Green Button Portal](https://greenbutton.nspower.ca/) — SAML login wall
-- [Authentication](https://accounts.nspower.ca/)
-- [Customer Portal](https://myaccount.nspower.ca/)
-- [OASIS Open Data](https://oasis.nspower.ca/)
-- [OASIS Monthly Reports](https://www.nspower.ca/oasis/monthly-reports)
-- [OASIS System Reports and Messages](https://www.nspower.ca/oasis/system-reports-messages)
-- [Distribution Hosting Capacity](https://www.nspower.ca/oasis/distribution-hosting-capacity)
-- [Regulatory Initiatives](https://www.nspower.ca/about-us/regulations/regulatory-initiatives)
-- [Legal](https://www.nspower.ca/legal)
-- [Privacy Statement](https://www.nspower.ca/privacy-statement)
-- [Outage Map](https://outagemap.nspower.ca/)
+- [Documentation](https://www.nspower.ca/oasis/monthly-reports)
+- [Support](https://www.nspower.ca/customer-service)
+- [Blog](https://www.nspower.ca/about-us/articles)
+- [Terms of service](https://www.nspower.ca/legal)
+- [Privacy policy](https://www.nspower.ca/privacy-statement)
 
-## Artifacts
+## API Evangelist rating
 
-Nothing here is a harvested provider artifact, because Nova Scotia Power publishes none.
-Each file below records what was probed and what was found, so the absence is documented
-rather than assumed.
+**Kin Score 19.7** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-- [authentication/](authentication/nova-scotia-power-authentication.yml) — SAML 2.0 SSO via
-  LoginRadius; no OAuth2, no API keys, no mTLS, no client registration. Every OIDC/OAuth
-  discovery path 404s.
-- [conformance/](conformance/nova-scotia-power-conformance.yml) — Green Button DMD certified
-  to ESPI v3.3 (verified against the Green Button Alliance); CMD not certified. Standards
-  asserted with evidence, absences recorded rather than omitted.
-- [conventions/](conventions/nova-scotia-power-conventions.yml) — cross-cutting semantics for
-  the bulk-file surface, plus the two undocumented vendor endpoints observed (KUBRA outage
-  JSON, Sitefinity OData 401) and deliberately not listed as APIs.
-- [lifecycle/](lifecycle/nova-scotia-power-lifecycle.yml) — the statutory timeline: mandate,
-  deadline, partial certification, and 3 years 3 months outstanding.
-- [well-known/](well-known/nova-scotia-power-well-known.yml) — every `/.well-known/` and spec
-  path probed on six hosts. No discovery document exists; a `200` on the redirecting hosts is
-  a landing page, not a document.
-- [packages/](packages/nova-scotia-power-packages.yml) — eight registries and five GitHub org
-  candidates searched. No first-party client library, no GitHub organization.
-- [security/](security/nova-scotia-power-domain-security.yml) — TLS/HSTS/DNSSEC/CAA/SPF/DMARC
-  probe across seven hosts. TLS 1.3 everywhere, DMARC p=reject, no DNSSEC, no CAA.
-- [llms/](llms/nova-scotia-power-llms.txt) — generated llms.txt for agents.
+| Facet | Score |
+|---|---|
+| Discoverability | 49.1 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 38.1 |
+| Access clarity | 21.1 |
 
-The outage map is wired as `OutageMap`, not `StatusPage`: it is a KUBRA-hosted consumer
-outage widget, not an API service-status surface.
+**Agent readiness 5.4** — agent-aware
 
-## Maintainers
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-- Kin Lane — kin@apievangelist.com
+**Regulatory alignment 18.4** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nova-scotia-power/](https://apis.io/providers/nova-scotia-power/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nova Scotia Power: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nova-scotia-power/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
